@@ -5,23 +5,24 @@ import { useEffect, useState } from 'react';
 import createPokemonImageUrl from '../utils/createPokemonImageUrl';
 import useIsFavorite from '../hooks/useIsFavorite';
 
-export default function PokemonListItem({ pokemon }){
-  const [isFavoriteValue, setIsFavoriteValue ] = useIsFavorite(pokemon);
+export default function PokemonCard({ pokemon }) {
+
+  const [isFavoriteValue, setIsFavoriteValue] = useIsFavorite(pokemon);
+
 
   const handleFavoritePress = async () => {
-    if(isFavoriteValue){
+    if (isFavoriteValue) {
       await removeFromFavorite(pokemon.name);
       setIsFavoriteValue(false);
-    }else{
+    } else {
       await addToFavorite(pokemon);
       setIsFavoriteValue(true);
     }
   };
 
-
   return (
     <View style={styles.itemContainer}>
-      <Image 
+      <Image
         source={{
           uri: createPokemonImageUrl(pokemon.url),
         }}
@@ -35,9 +36,12 @@ export default function PokemonListItem({ pokemon }){
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     padding: 8,
+    flex:1,
+    margin: 10,
+    backgroundColor: "#eeeeee",
   },
   image: {
     width: 50,

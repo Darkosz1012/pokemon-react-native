@@ -35,7 +35,7 @@ export async function getAllFavorite() {
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     const filteredKeys = filterKeys(allKeys, "@favorite");
-    const values = (await AsyncStorage.multiGet(filteredKeys)).map((val)=>JSON.parse(val));
+    const values = (await AsyncStorage.multiGet(filteredKeys)).map((val)=>JSON.parse(val[1]));
     return values;
   } catch (err) {
     console.error(err)
