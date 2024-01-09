@@ -1,10 +1,10 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function FavoriteButton({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text style={styles.favoriteButtonText}>Dodaj do ulubionych</Text>
+      <MaterialCommunityIcons name="cards-heart-outline"  size={26} />
     </TouchableOpacity>
   );
 };
