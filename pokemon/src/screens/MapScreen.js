@@ -2,7 +2,7 @@
 import { Text } from 'react-native';
 
 export default function MapScreen() {
-    return (
-        <Text>Map</Text>
-    );
+  return (
+    <Text>Map</Text>
+  );
 }
