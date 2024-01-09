@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, Text, View, Image } from 'react-native';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
-import createPokemonImageUrl from '../utils/createPokemonImageUrl';
+
 import PokemonListItem from '../components/PokemonListItem';
 
 const fetchList = ({ pageParam = `https://pokeapi.co/api/v2/pokemon?limit=20&offset=0` }) => {
@@ -30,7 +30,7 @@ export default function ListScreen() {
        data={data?.pages.flatMap(page => page.results)}
       renderItem={({item,index}) => {
         return (
-          <PokemonListItem key={index} name={item.name} imageUrl={createPokemonImageUrl(item.url)}/>
+          <PokemonListItem key={index} pokemon={item} />
         )
       }}
       keyExtractor={item => item.name}
