@@ -8,15 +8,20 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { FavoritesProvider } from './src/contexts/FavoritesContext';
+
+
 
 const queryClient = new QueryClient()
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <AppStack />
-      </NavigationContainer>
+      <FavoritesProvider>
+        <NavigationContainer>
+          <AppStack />
+        </NavigationContainer>
+      </FavoritesProvider>
     </QueryClientProvider>
   );
 }

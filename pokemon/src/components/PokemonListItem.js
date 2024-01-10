@@ -4,10 +4,12 @@ import { addToFavorite, isFavorite, removeFromFavorite } from '../utils/PokemonS
 import { useEffect, useState } from 'react';
 import createPokemonImageUrl from '../utils/createPokemonImageUrl';
 import useIsFavorite from '../hooks/useIsFavorite';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 export default function PokemonListItem({ pokemon }){
-  const [isFavoriteValue, setIsFavoriteValue ] = useIsFavorite(pokemon);
-
+  const [isFavoriteValue, setIsFavoriteValue, refetchIsFavorite ] = useIsFavorite(pokemon);
+  const {refetchFavorites} = useFavorites();
+ 
   const handleFavoritePress = async () => {
     if(isFavoriteValue){
       await removeFromFavorite(pokemon.name);
@@ -16,8 +18,12 @@ export default function PokemonListItem({ pokemon }){
       await addToFavorite(pokemon);
       setIsFavoriteValue(true);
     }
+    refetchFavorites();
   };
 
+  useEffect(()=>{
+    refetchIsFavorite();
+  })
 
   return (
     <View style={styles.itemContainer}>

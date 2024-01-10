@@ -5,9 +5,13 @@ import { isFavorite } from "../utils/PokemonStorage";
 export default function useIsFavorite(pokemon){
     const [isFavoriteValue, setIsFavoriteValue ] = useState(false);
 
-    useEffect(()=>{
+    const refetchIsFavorite = () =>{
       isFavorite(pokemon.name).then(res => setIsFavoriteValue(res))
+    }
+
+    useEffect(()=>{
+      refetchIsFavorite();
     },[pokemon?.name])
   
-    return [isFavoriteValue, setIsFavoriteValue ];
+    return [isFavoriteValue, setIsFavoriteValue, refetchIsFavorite];
 }
