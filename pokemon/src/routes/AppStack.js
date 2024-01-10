@@ -16,7 +16,7 @@ export default function AppStack() {
         component={FavoritesScreen}
         options={{
           tabBarLabel: 'Favorites',
-          tabBarIcon: { FavoriteIcon },
+          tabBarIcon: FavoriteIcon,
         }}
       />
       <Tab.Screen
@@ -24,7 +24,7 @@ export default function AppStack() {
         component={ListScreen}
         options={{
           tabBarLabel: 'List',
-          tabBarIcon: { ListIcon },
+          tabBarIcon: ListIcon,
         }}
       />
       <Tab.Screen
@@ -32,7 +32,7 @@ export default function AppStack() {
         component={MapScreen}
         options={{
           tabBarLabel: 'Map',
-          tabBarIcon: { MapIcon },
+          tabBarIcon: MapIcon,
         }}
       />
     </Tab.Navigator>
@@ -44,13 +44,11 @@ function FavoriteIcon({ color }) {
     <MaterialCommunityIcons name="cards-heart-outline" color={color} size={26} />
   );
 }
-
 function ListIcon({ color }) {
   return (
     <MaterialCommunityIcons name="clipboard-list-outline" color={color} size={26} />
   );
 }
-
 function MapIcon({ color }) {
   return (
     <MaterialCommunityIcons name="map-legend" color={color} size={26} />
