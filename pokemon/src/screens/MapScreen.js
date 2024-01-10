@@ -1,5 +1,5 @@
-
-import { Text, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import MapView from 'react-native-maps';
 
 export default function MapScreen() {
@@ -15,7 +15,7 @@ export default function MapScreen() {
         }}
       />
     </View>
-    
+
   );
 }
 
@@ -28,5 +28,4 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
- });
- 
+});

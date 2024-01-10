@@ -1,3 +1,4 @@
+import React from 'react';
 import PokemonsList from '../components/PokemonsList';
 
 export default function ListScreen() {
@@ -5,4 +6,3 @@ export default function ListScreen() {
     <PokemonsList />
   );
 }
-
