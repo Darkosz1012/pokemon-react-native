@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export async function addToFavorite(pokemon) {
+export async function addToFavorites(pokemon) {
   try {
     await AsyncStorage.setItem(`@favorite-${pokemon.name}`, JSON.stringify(pokemon))
   } catch (err) {
@@ -9,7 +9,7 @@ export async function addToFavorite(pokemon) {
   }
 }
 
-export async function removeFromFavorite(pokemonName) {
+export async function removeFromFavorites(pokemonName) {
   try {
     await AsyncStorage.removeItem(`@favorite-${pokemonName}`)
   } catch (err) {
@@ -31,7 +31,7 @@ export async function isFavorite(pokemonName) {
 
 const filterKeys = (keys, prefix) => keys.filter(key => key.startsWith(prefix));
 
-export async function getAllFavorite() {
+export async function getAllFavorites() {
   try {
     const allKeys = await AsyncStorage.getAllKeys();
     const filteredKeys = filterKeys(allKeys, "@favorite");

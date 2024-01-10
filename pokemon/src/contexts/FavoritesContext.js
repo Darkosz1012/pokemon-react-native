@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { getAllFavorite } from '../utils/PokemonStorage';
+import { getAllFavorites } from '../utils/PokemonStorage';
 
 const FavoritesContext = createContext();
 
@@ -15,7 +15,7 @@ export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
   const refetchFavorites = () =>{
-    getAllFavorite().then((res)=>setFavorites(res))
+    getAllFavorites().then((res)=>setFavorites(res))
   }
 
   useEffect(()=>{

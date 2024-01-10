@@ -1,18 +1,15 @@
 import React from 'react';
 import { View, FlatList, Text, StyleSheet } from 'react-native';
 import PokemonCard from './PokemonCard';
+import { useFavorites } from '../contexts/FavoritesContext';
 
 
-export default function FavoriteList({data}){
-  const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>{item.name}</Text>
-    </View>
-  );
+export default function FavoritesList(){
+  const {favorites} = useFavorites();
 
   return (
     <FlatList
-      data={data}
+      data={favorites}
       renderItem={({item,index}) => {
         return (
           <PokemonCard key={index} pokemon={item} />

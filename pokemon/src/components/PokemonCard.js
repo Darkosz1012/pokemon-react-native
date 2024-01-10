@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
 import FavoriteButton from './FavoriteButton';
-import { addToFavorite, isFavorite, removeFromFavorite } from '../utils/PokemonStorage';
+import { addToFavorites, isFavorite, removeFromFavorites } from '../utils/PokemonStorage';
 import { useEffect, useState } from 'react';
 import createPokemonImageUrl from '../utils/createPokemonImageUrl';
 import useIsFavorite from '../hooks/useIsFavorite';
@@ -13,10 +13,10 @@ export default function PokemonCard({ pokemon }) {
 
   const handleFavoritePress = async () => {
     if (isFavoriteValue) {
-      await removeFromFavorite(pokemon.name);
+      await removeFromFavorites(pokemon.name);
       setIsFavoriteValue(false);
     } else {
-      await addToFavorite(pokemon);
+      await addToFavorites(pokemon);
       setIsFavoriteValue(true);
     }
     refetchFavorites();

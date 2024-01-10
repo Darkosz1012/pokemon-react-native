@@ -1,7 +1,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import FavoriteScreen from '../screens/FavoriteScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
 
@@ -11,9 +11,9 @@ const Tab = createMaterialBottomTabNavigator();
 export default function AppStack() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Favorite" component={FavoriteScreen}
+      <Tab.Screen name="Favorites" component={FavoritesScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Favorites',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="cards-heart-outline" color={color} size={26} />
           ),
