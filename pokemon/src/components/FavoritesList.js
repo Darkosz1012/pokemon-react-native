@@ -12,10 +12,10 @@ export default function FavoritesList(){
       data={favorites}
       renderItem={({item,index}) => {
         return (
-          <PokemonCard key={index} pokemon={item} />
+          <PokemonCard  pokemon={item} />
         )
       }}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.name}
       numColumns={2} 
       style={styles.container}
     />

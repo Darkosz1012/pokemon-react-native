@@ -33,7 +33,9 @@ export default function PokemonsList() {
           <PokemonListItem key={index} pokemon={item} />
         )
       }}
-      keyExtractor={item => item.name}
+      keyExtractor={item =>{
+         console.log(item.name)
+        return  item.name}}
       onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       onEndReachedThreshold={0.5}
     />

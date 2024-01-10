@@ -7,20 +7,13 @@ import useIsFavorite from '../hooks/useIsFavorite';
 import { useFavorites } from '../contexts/FavoritesContext';
 
 export default function PokemonCard({ pokemon }) {
+  const {toggleFavorite , isFavorite} = useFavorites();
 
-  const [isFavoriteValue, setIsFavoriteValue] = useIsFavorite(pokemon);
-  const {refetchFavorites} = useFavorites();
-
+ 
   const handleFavoritePress = async () => {
-    if (isFavoriteValue) {
-      await removeFromFavorites(pokemon.name);
-      setIsFavoriteValue(false);
-    } else {
-      await addToFavorites(pokemon);
-      setIsFavoriteValue(true);
-    }
-    refetchFavorites();
+    await toggleFavorite(pokemon);
   };
+
 
   return (
     <View style={styles.itemContainer}>
@@ -30,7 +23,7 @@ export default function PokemonCard({ pokemon }) {
         }}
         style={styles.image} />
       <Text style={styles.name}>{pokemon.name}</Text>
-      <FavoriteButton onPress={handleFavoritePress} isFavorite={isFavoriteValue} />
+      <FavoriteButton onPress={handleFavoritePress} isFavorite={isFavorite(pokemon.name)} />
     </View>
   );
 };

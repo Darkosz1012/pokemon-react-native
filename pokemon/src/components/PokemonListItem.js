@@ -1,29 +1,17 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
-import FavoriteButton from './FavoriteButton';
-import { addToFavorites, isFavorite, removeFromFavorites } from '../utils/PokemonStorage';
-import { useEffect, useState } from 'react';
-import createPokemonImageUrl from '../utils/createPokemonImageUrl';
-import useIsFavorite from '../hooks/useIsFavorite';
+import { useEffect } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { useFavorites } from '../contexts/FavoritesContext';
+import useIsFavorite from '../hooks/useIsFavorite';
+import createPokemonImageUrl from '../utils/createPokemonImageUrl';
+import FavoriteButton from './FavoriteButton';
 
 export default function PokemonListItem({ pokemon }){
-  const [isFavoriteValue, setIsFavoriteValue, refetchIsFavorite ] = useIsFavorite(pokemon);
-  const {refetchFavorites} = useFavorites();
+  const {toggleFavorite, isFavorite} = useFavorites();
+
  
   const handleFavoritePress = async () => {
-    if(isFavoriteValue){
-      await removeFromFavorites(pokemon.name);
-      setIsFavoriteValue(false);
-    }else{
-      await addToFavorites(pokemon);
-      setIsFavoriteValue(true);
-    }
-    refetchFavorites();
+    await toggleFavorite(pokemon);
   };
-
-  useEffect(()=>{
-    refetchIsFavorite();
-  })
 
   return (
     <View style={styles.itemContainer}>
@@ -33,7 +21,7 @@ export default function PokemonListItem({ pokemon }){
         }}
         style={styles.image} />
       <Text style={styles.name}>{pokemon.name}</Text>
-      <FavoriteButton onPress={handleFavoritePress} isFavorite={isFavoriteValue} />
+      <FavoriteButton onPress={handleFavoritePress} isFavorite={isFavorite(pokemon.name)} />
     </View>
   );
 };
