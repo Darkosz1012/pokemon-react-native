@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import {
   render, screen, fireEvent, act, waitFor,
@@ -38,6 +41,11 @@ function CustomTest({ pokemon }) {
   );
 }
 describe('FavoritesContext', () => {
+  afterEach(() => {
+    getAllFavorites.mockClear();
+    addToFavorites.mockClear();
+    removeFromFavorites.mockClear();
+  });
   test('Should render initial values', async () => {
     render(
       <FavoritesProvider>
@@ -64,7 +72,6 @@ describe('FavoritesContext', () => {
     await waitFor(() => {
       expect(screen.getByTestId('favorites')).toHaveTextContent('[{"test":"test"}]');
     });
-    getAllFavorites.mockClear();
   });
 
   test('should remove from favorites when toggleFavorite was called and pokemon was in favorites', async () => {
@@ -87,7 +94,7 @@ describe('FavoritesContext', () => {
   });
 
   test('should add to favorites when toggleFavorite was called and pokemon wasn\'t in favorites', async () => {
-    getAllFavorites.mockImplementation(() => Promise.resolve([{ name: 'test' }]));
+    getAllFavorites.mockImplementation(() => Promise.resolve([{ name: 'test1' }]));
     render(
       <FavoritesProvider>
         <CustomTest pokemon={{ name: 'test' }} />
@@ -101,7 +108,7 @@ describe('FavoritesContext', () => {
       fireEvent.click(screen.getByTestId('toggleFavorite'));
     });
     await waitFor(() => {
-      expect(removeFromFavorites).toHaveBeenCalledTimes(1);
+      expect(addToFavorites).toHaveBeenCalledTimes(1);
     });
   });
 });
