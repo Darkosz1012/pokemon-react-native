@@ -42,9 +42,7 @@ function CustomTest({ pokemon }) {
 }
 describe('FavoritesContext', () => {
   afterEach(() => {
-    getAllFavorites.mockClear();
-    addToFavorites.mockClear();
-    removeFromFavorites.mockClear();
+    jest.clearAllMocks();
   });
   test('Should render initial values', async () => {
     render(

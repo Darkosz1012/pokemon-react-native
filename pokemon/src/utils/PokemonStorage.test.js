@@ -11,20 +11,19 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 describe('PokemonStorage', () => {
   describe('getAllFavorites', () => {
     test('should filter out keys not belonging to favorite', async () => {
-      AsyncStorage.getAllKeys.mockImplementationOnce(() => [
+      AsyncStorage.getAllKeys.mockReturnValueOnce([
         'test',
         '@favorite-Bulbasaur',
       ]);
-      AsyncStorage.multiGet.mockImplementationOnce(() => []);
 
       await getAllFavorites();
 
       expect(AsyncStorage.multiGet).toHaveBeenCalledWith(['@favorite-Bulbasaur']);
     });
     test('should return array with all favorites', async () => {
-      AsyncStorage.getAllKeys.mockImplementationOnce(() => []);
+      AsyncStorage.getAllKeys.mockReturnValueOnce([]);
 
-      AsyncStorage.multiGet.mockImplementationOnce(() => [
+      AsyncStorage.multiGet.mockReturnValueOnce([
         ['@favorite-Bulbasaur', '{ "test1": "test1" }'],
       ]);
 
