@@ -40,7 +40,8 @@ export function FavoritesProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  }, [isFavorite]);
+    refetchFavorites();
+  }, [isFavorite, refetchFavorites]);
 
   useEffect(() => {
     refetchFavorites();
