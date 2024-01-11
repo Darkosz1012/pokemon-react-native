@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllFavorites, addToFavorites, removeFromFavorites } from './PokemonStorage'; // Update the path accordingly
 
-// Mock AsyncStorage
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getAllKeys: jest.fn(),
   multiGet: jest.fn(),
