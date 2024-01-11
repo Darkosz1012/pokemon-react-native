@@ -25,14 +25,6 @@ const wrapper = ({ children }) => (
   <FavoritesProvider>{children}</FavoritesProvider>
 );
 
-test('should first', async () => {
-  const { result } = renderHook(() => useFavorites(), { wrapper });
-  console.log(result);
-  await waitFor(() => {
-    expect(result.current.favorites).toEqual([]);
-  });
-});
-
 describe('FavoritesContext', () => {
   afterEach(() => {
     jest.clearAllMocks();
