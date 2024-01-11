@@ -1,9 +1,8 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import {
-  render, screen, fireEvent, act, waitFor,
+  waitFor,
+  renderHook,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { FavoritesProvider, useFavorites } from './FavoritesContext';
@@ -22,89 +21,68 @@ jest.mock('../utils/PokemonStorage', () => ({
   removeFromFavorites: jest.fn(),
 }));
 
-function CustomTest({ pokemon }) {
-  const {
-    favorites, refetchFavorites, toggleFavorite, isFavorite,
-  } = useFavorites();
+const wrapper = ({ children }) => (
+  <FavoritesProvider>{children}</FavoritesProvider>
+);
 
-  const toggle = () => {
-    toggleFavorite(pokemon);
-  };
+test('should first', async () => {
+  const { result } = renderHook(() => useFavorites(), { wrapper });
+  console.log(result);
+  await waitFor(() => {
+    expect(result.current.favorites).toEqual([]);
+  });
+});
 
-  return (
-    <>
-      <div data-testid="favorites">{JSON.stringify(favorites)}</div>
-      <div data-testid="refetchFavorites" onClick={refetchFavorites} />
-      <div data-testid="toggleFavorite" onClick={toggle(pokemon)} />
-      <div data-testid="isFavorite" onClick={isFavorite} />
-    </>
-  );
-}
 describe('FavoritesContext', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
   test('Should render initial values', async () => {
-    render(
-      <FavoritesProvider>
-        <CustomTest />
-      </FavoritesProvider>,
-    );
+    const { result } = renderHook(() => useFavorites(), { wrapper });
+
     await waitFor(() => {
-      expect(screen.getByTestId('favorites')).toHaveTextContent('[]');
+      expect(result.current.favorites).toEqual([]);
     });
   });
 
   test('Should set correct favorites after refetchFavorites', async () => {
+    const { result } = renderHook(() => useFavorites(), { wrapper });
     getAllFavorites.mockImplementation(() => Promise.resolve([{ test: 'test' }]));
-    render(
-      <FavoritesProvider>
-        <CustomTest />
-      </FavoritesProvider>,
-    );
 
-    act(() => {
-      fireEvent.click(screen.getByTestId('refetchFavorites'));
-    });
+    result.current.refetchFavorites();
 
     await waitFor(() => {
-      expect(screen.getByTestId('favorites')).toHaveTextContent('[{"test":"test"}]');
+      expect(result.current.favorites).toEqual([{ test: 'test' }]);
     });
   });
 
   test('should remove from favorites when toggleFavorite was called and pokemon was in favorites', async () => {
+    const { result } = renderHook(() => useFavorites(), { wrapper });
     getAllFavorites.mockImplementation(() => Promise.resolve([{ name: 'test' }]));
-    render(
-      <FavoritesProvider>
-        <CustomTest pokemon={{ name: 'test' }} />
-      </FavoritesProvider>,
-    );
 
-    act(() => {
-      fireEvent.click(screen.getByTestId('refetchFavorites'));
+    result.current.refetchFavorites();
+    await waitFor(() => {
+      expect(result.current.favorites).toEqual([{ name: 'test' }]);
     });
-    act(() => {
-      fireEvent.click(screen.getByTestId('toggleFavorite'));
-    });
+
+    result.current.toggleFavorite({ name: 'test' });
+
     await waitFor(() => {
       expect(removeFromFavorites).toHaveBeenCalledTimes(1);
     });
   });
 
   test('should add to favorites when toggleFavorite was called and pokemon wasn\'t in favorites', async () => {
+    const { result } = renderHook(() => useFavorites(), { wrapper });
     getAllFavorites.mockImplementation(() => Promise.resolve([{ name: 'test1' }]));
-    render(
-      <FavoritesProvider>
-        <CustomTest pokemon={{ name: 'test' }} />
-      </FavoritesProvider>,
-    );
 
-    act(() => {
-      fireEvent.click(screen.getByTestId('refetchFavorites'));
+    result.current.refetchFavorites();
+    await waitFor(() => {
+      expect(result.current.favorites).toEqual([{ name: 'test1' }]);
     });
-    act(() => {
-      fireEvent.click(screen.getByTestId('toggleFavorite'));
-    });
+
+    result.current.toggleFavorite({ name: 'test' });
+
     await waitFor(() => {
       expect(addToFavorites).toHaveBeenCalledTimes(1);
     });
